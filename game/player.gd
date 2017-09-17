@@ -9,7 +9,6 @@ onready var muzzle = get_node("muzzle")
 
 var screen_size
 var pos = Vector2()
-var vel = Vector2()
 
 func _ready():
 	screen_size = get_viewport_rect().size
