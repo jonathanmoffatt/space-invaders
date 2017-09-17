@@ -19,20 +19,23 @@ func _ready():
 	
 func _process(delta):
 	pos += velocity * delta * direction
-	if pos.x > (screen_size.width - margin_side):
-		pos.x = screen_size.width - margin_side
-		direction = Vector2(0, 1)
-		velocity *= 0.5
-		pos_at_turn = pos
+	var right_limit = screen_size.width - margin_side
+	if pos.x > right_limit:
+		pos.x = right_limit
+		move_down()
 	if pos.x < margin_side:
 		pos.x = margin_side
-		direction = Vector2(0, 1)
-		velocity *= 0.5
-		pos_at_turn = pos
-	if direction.y != 0 && pos.y > pos_at_turn.y + step_down:
+		move_down()
+	var finished_going_down = direction.y != 0 && pos.y > pos_at_turn.y + step_down
+	if finished_going_down:
 		if pos.x == margin_side:
 			direction = Vector2(1, 0)
 		else:
 			direction = Vector2(-1, 0)
 		velocity *= 2
 	set_pos(pos)
+
+func move_down():
+	direction = Vector2(0, 1)
+	velocity *= 0.5
+	pos_at_turn = pos
