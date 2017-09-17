@@ -47,4 +47,8 @@ wait_time = 0.5
 one_shot = true
 autostart = false
 
+[node name="muzzle" type="Position2D" parent="."]
+
+transform/pos = Vector2( 0, -65 )
+
 

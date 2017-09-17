@@ -5,6 +5,7 @@ export (PackedScene) var bullet
 
 onready var bullet_container = get_node("bullet_container")
 onready var bullet_timer = get_node("bullet_timer")
+onready var muzzle = get_node("muzzle")
 
 var screen_size
 var pos = Vector2()
@@ -36,4 +37,4 @@ func fire():
 	bullet_timer.start()
 	var b = bullet.instance()
 	bullet_container.add_child(b)
-	b.start_at(get_pos())
+	b.start_at(muzzle.get_global_pos())
