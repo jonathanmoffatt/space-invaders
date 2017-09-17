@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=5 format=1]
 
 [ext_resource path="res://game/player.gd" type="Script" id=1]
-[ext_resource path="res://assets/PNG/playerShip3_orange.png" type="Texture" id=2]
+[ext_resource path="res://game/player_bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/PNG/playerShip3_orange.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -23,10 +24,11 @@ __meta__ = {
 "_edit_group_": true
 }
 velocity = 700
+bullet = ExtResource( 2 )
 
 [node name="ship" type="Sprite" parent="."]
 
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 
 [node name="collision" type="CollisionShape2D" parent="."]
 
@@ -35,5 +37,7 @@ transform/scale = Vector2( 1, 0.724788 )
 shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
+
+[node name="bullet_container" type="Node" parent="."]
 
 

@@ -1,6 +1,9 @@
 extends Area2D
 
 export var velocity = 700
+export (PackedScene) var bullet
+
+onready var bullet_container = get_node("bullet_container")
 
 var screen_size
 var pos = Vector2()
@@ -14,6 +17,8 @@ func _ready():
 	set_process(true)
 	
 func _process(delta):
+	if Input.is_action_pressed("player_fire"):
+		fire()
 	if Input.is_action_pressed("player_left"):
 		pos.x -= velocity * delta
 	if Input.is_action_pressed("player_right"):
@@ -24,3 +29,8 @@ func _process(delta):
 		pos.x = screen_size.width
 	
 	set_pos(pos)
+
+func fire():
+	var b = bullet.instance()
+	bullet_container.add_child(b)
+	b.start_at(get_pos())
