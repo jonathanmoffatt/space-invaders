@@ -2,10 +2,7 @@ extends Area2D
 
 export var velocity = 150
 export var margin_side = 100
-export var margin_top = 100
 export var step_down = 50
-export var start_x = 100
-export var start_y = 100
 
 signal invader_direction_change
 
@@ -25,32 +22,27 @@ var pos_at_turn = Vector2()
 
 func _ready():
 	screen_size = get_viewport_rect().size
-	pos.x = start_x
-	pos.y = start_y
-	set_pos(pos)
+	
+func start():
+	pos = get_pos()
+	pos_at_turn = get_pos()
 	set_process(true)
-	# connect("invader_direction_change", self, "change_direction")
 	
 func _process(delta):
 	pos += velocity * velocity_adjustment * delta * direction
 	var right_limit = screen_size.width - margin_side
+	var finished_going_down = pos.y > pos_at_turn.y + step_down
 	set_pos(pos)
 	if pos.x > right_limit && currently_travelling == Travelling.RIGHT:
 		emit_signal("invader_direction_change", Travelling.DOWN_THEN_LEFT)			
 	if pos.x < margin_side && currently_travelling == Travelling.LEFT:
 		emit_signal("invader_direction_change", Travelling.DOWN_THEN_RIGHT)
-	var going_down = currently_travelling == Travelling.DOWN_THEN_RIGHT || currently_travelling == Travelling.DOWN_THEN_LEFT
-	if going_down:
-		var finished_going_down = pos.y > pos_at_turn.y + step_down
-		if finished_going_down:
-			if currently_travelling == Travelling.DOWN_THEN_RIGHT:
-				emit_signal("invader_direction_change", Travelling.RIGHT)
-			else:
-				emit_signal("invader_direction_change", Travelling.LEFT)
+	if finished_going_down && currently_travelling == Travelling.DOWN_THEN_RIGHT:
+		emit_signal("invader_direction_change", Travelling.RIGHT)
+	if finished_going_down && currently_travelling == Travelling.DOWN_THEN_LEFT:
+		emit_signal("invader_direction_change", Travelling.LEFT)
 
 func change_direction(new_travel):
-	print("direction_change_handler")
-	print(new_travel)
 	if new_travel == Travelling.RIGHT:
 		direction = Vector2(1, 0)
 		velocity_adjustment = 1.0
