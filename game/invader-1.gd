@@ -1,7 +1,7 @@
 extends Area2D
 
 export var velocity = 150
-export var margin_side = 100
+export var margin_side = 280
 export var step_down = 50
 
 signal invader_direction_change
