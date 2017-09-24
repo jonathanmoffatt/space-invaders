@@ -21,7 +21,7 @@ angular_damp = 1.0
 script/script = ExtResource( 1 )
 velocity = 150
 margin_side = 280
-step_down = 50
+down_step = 50
 side_step = 40
 
 [node name="sprite" type="Sprite" parent="."]

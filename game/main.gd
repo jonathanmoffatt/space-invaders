@@ -12,8 +12,7 @@ onready var wave_movement_timer = get_node("wave_movement_timer")
 enum Travelling {
 	LEFT,
 	RIGHT,
-	DOWN_THEN_RIGHT,
-	DOWN_THEN_LEFT
+	DOWN
 }
 
 func _ready():
@@ -25,7 +24,6 @@ func _ready():
 			self.add_child(invader)
 			row.append(weakref(invader))
 			invader.set_pos(Vector2(i*150 + 150, j*120 + 100))
-			# invader.connect("invader_direction_change", self, "on_direction_change")
 		squadron.append(row)
 	start()
 	
@@ -51,17 +49,27 @@ func get_invaders_by_row(row):
 			invaders.append(invader)
 	return invaders
 
-func on_direction_change(new_travel):
+func is_on_left_limit():
 	for invader in get_all_invaders():
-		invader.change_direction(new_travel)
+		if invader.is_at_left_limit():
+			return true
+	return false
+
+func is_on_right_limit():
+	for invader in get_all_invaders():
+		if invader.is_at_right_limit():
+			return true
+	return false
 
 func _on_row_movement_timer_timeout():
-	print("_on_row_movement_timer_timeout")
-	for invader in get_invaders_by_row(current_row):
+	var row_index = current_row if travelling != Travelling.DOWN else row_count - current_row - 1
+	for invader in get_invaders_by_row(row_index):
 		if travelling == Travelling.LEFT:
 			invader.blip_left()
 		if travelling == Travelling.RIGHT:
 			invader.blip_right()
+		if travelling == Travelling.DOWN:
+			invader.blip_down()
 	current_row += 1
 	if current_row < row_count:
 		row_movement_timer.start()
@@ -69,6 +77,11 @@ func _on_row_movement_timer_timeout():
 		wave_movement_timer.start()
 
 func _on_wave_movement_timer_timeout():
-	print("_on_wave_movement_timer_timeout")
 	current_row = 0
+	if travelling == Travelling.LEFT && is_on_left_limit():
+		travelling = Travelling.DOWN
+	elif travelling == Travelling.RIGHT && is_on_right_limit():
+		travelling = Travelling.DOWN
+	elif travelling == Travelling.DOWN:
+		travelling = Travelling.RIGHT if is_on_left_limit() else Travelling.LEFT
 	row_movement_timer.start()

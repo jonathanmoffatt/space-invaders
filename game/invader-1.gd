@@ -2,7 +2,7 @@ extends Area2D
 
 export var velocity = 150
 export var margin_side = 280
-export var step_down = 50
+export var down_step = 50
 export var side_step = 40
 
 signal invader_direction_change
@@ -16,10 +16,13 @@ enum Travelling {
 
 var screen_size
 var pos = Vector2()
+var left_blip = Vector2(-side_step, 0)
+var right_blip = Vector2(side_step, 0)
+var down_blip = Vector2(0, down_step)
 var currently_travelling = Travelling.RIGHT
 var direction = Vector2(1, 0)
 var velocity_adjustment = 1.0
-var pos_at_blip = Vector2()
+var target_pos = Vector2()
 
 func _ready():
 	add_to_group("invaders")
@@ -30,52 +33,46 @@ func start():
 	
 func _process(delta):
 	pos += velocity * velocity_adjustment * delta * direction
-	set_pos(pos)
-	if currently_travelling == Travelling.RIGHT || currently_travelling == Travelling.LEFT:
-		var distance = (pos - pos_at_blip).abs().x
-		if distance >= side_step:
-			set_process(false)
+	if currently_travelling == Travelling.RIGHT:
+		if pos.x > target_pos.x:
+			pos.x = target_pos.x
 			currently_travelling = Travelling.STATIONARY
-	
-
-	# var right_limit = screen_size.width - margin_side
-	# var finished_going_down = pos.y > pos_at_blip.y + step_down
-	# set_pos(pos)
-	# if pos.x > right_limit && currently_travelling == Travelling.RIGHT:
-	# 	emit_signal("invader_direction_change", Travelling.DOWN_THEN_LEFT)			
-	# if pos.x < margin_side && currently_travelling == Travelling.LEFT:
-	# 	emit_signal("invader_direction_change", Travelling.DOWN_THEN_RIGHT)
-	# if finished_going_down && currently_travelling == Travelling.DOWN_THEN_RIGHT:
-	# 	emit_signal("invader_direction_change", Travelling.RIGHT)
-	# if finished_going_down && currently_travelling == Travelling.DOWN_THEN_LEFT:
-	# 	emit_signal("invader_direction_change", Travelling.LEFT)
+	if currently_travelling == Travelling.LEFT:
+		if pos.x < target_pos.x:
+			pos.x = target_pos.x
+			currently_travelling = Travelling.STATIONARY
+	if currently_travelling == Travelling.DOWN:
+		if pos.y > target_pos.y:
+			pos.y = target_pos.y
+			currently_travelling = Travelling.STATIONARY
+	if currently_travelling == Travelling.STATIONARY:			
+		set_process(false)
+	set_pos(pos)
 
 func blip_left():
-	print("blip_left")
 	currently_travelling = Travelling.LEFT
 	direction = Vector2(-1, 0)
-	pos_at_blip = get_pos()
+	target_pos = get_pos() + left_blip
 	set_process(true)
 
 func blip_right():
-	print("blip_right")
 	currently_travelling = Travelling.RIGHT
 	direction = Vector2(1, 0)
-	pos_at_blip = get_pos()
+	target_pos = get_pos() + right_blip
 	set_process(true)
 
-func change_direction(new_travel):
-	if new_travel == Travelling.RIGHT:
-		direction = Vector2(1, 0)
-		velocity_adjustment = 1.0
-	if new_travel == Travelling.LEFT:
-		direction = Vector2(-1, 0)
-		velocity_adjustment = 1.0
-	if new_travel == Travelling.DOWN_THEN_LEFT || new_travel == Travelling.DOWN_THEN_RIGHT:
-		direction = Vector2(0, 1)
-		velocity_adjustment = 0.5
-	currently_travelling = new_travel
-	pos_at_blip = get_pos()
-		
+func blip_down():
+	currently_travelling = Travelling.DOWN
+	direction = Vector2(0, 1)
+	target_pos = get_pos() + down_blip
+	set_process(true)
+
+func is_at_left_limit():
+	return pos.x <= margin_side
+
+func is_at_right_limit():
+	var right_limit = screen_size.width - margin_side
+	return pos.x > right_limit
+
 func explode():
 	queue_free()
