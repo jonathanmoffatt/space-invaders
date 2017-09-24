@@ -5,9 +5,10 @@ var horizontal_count = 11
 var row_count = 5
 var travelling = Travelling.RIGHT
 var current_row = 0
+var initial_row_wait_time = 0.2
+var last_message
 
-onready var row_movement_timer = get_node("row_movement_timer")
-onready var wave_movement_timer = get_node("wave_movement_timer")
+onready var movement_timer = get_node("movement_timer")
 
 enum Travelling {
 	LEFT,
@@ -28,10 +29,24 @@ func _ready():
 	start()
 	
 func start():	
-	wave_movement_timer.start()
 	for invader in get_all_invaders():
 		invader.start()
+	start_wave()
 
+func start_wave():
+	current_row = 0
+	if travelling == Travelling.LEFT && is_on_left_limit():
+		travelling = Travelling.DOWN
+	elif travelling == Travelling.RIGHT && is_on_right_limit():
+		travelling = Travelling.DOWN
+	elif travelling == Travelling.DOWN:
+		travelling = Travelling.RIGHT if is_on_left_limit() else Travelling.LEFT
+	var wait_time = initial_row_wait_time * get_proportion_remaining()
+	movement_timer.set_wait_time(wait_time)
+	for invader in get_all_invaders():
+		invader.velocity_adjustment = 1 / get_proportion_remaining()
+	movement_timer.start()
+				
 func get_all_invaders():
 	var all = []
 	for row in squadron:
@@ -49,6 +64,9 @@ func get_invaders_by_row(row):
 			invaders.append(invader)
 	return invaders
 
+func get_invader_count():
+	return get_all_invaders().size()
+
 func is_on_left_limit():
 	for invader in get_all_invaders():
 		if invader.is_at_left_limit():
@@ -61,7 +79,15 @@ func is_on_right_limit():
 			return true
 	return false
 
-func _on_row_movement_timer_timeout():
+func get_proportion_remaining():
+	var number_remaining = get_invader_count()
+	var total = horizontal_count * row_count
+	var number_of_rows_remaining = ceil(float(number_remaining) / horizontal_count)
+	var proportion = number_of_rows_remaining / row_count if number_remaining > 6 else float(number_remaining) / total
+	print_debounce("number_remaining=%s; proportion=%s" % [number_remaining, proportion])
+	return proportion
+
+func _on_movement_timer_timeout():
 	var row_index = current_row if travelling != Travelling.DOWN else row_count - current_row - 1
 	for invader in get_invaders_by_row(row_index):
 		if travelling == Travelling.LEFT:
@@ -72,16 +98,11 @@ func _on_row_movement_timer_timeout():
 			invader.blip_down()
 	current_row += 1
 	if current_row < row_count:
-		row_movement_timer.start()
+		movement_timer.start()
 	else:
-		wave_movement_timer.start()
+		start_wave()
 
-func _on_wave_movement_timer_timeout():
-	current_row = 0
-	if travelling == Travelling.LEFT && is_on_left_limit():
-		travelling = Travelling.DOWN
-	elif travelling == Travelling.RIGHT && is_on_right_limit():
-		travelling = Travelling.DOWN
-	elif travelling == Travelling.DOWN:
-		travelling = Travelling.RIGHT if is_on_left_limit() else Travelling.LEFT
-	row_movement_timer.start()
+func print_debounce(message):
+	if message != last_message:
+		print(message)
+		last_message = message

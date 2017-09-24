@@ -4,8 +4,7 @@ export var velocity = 150
 export var margin_side = 280
 export var down_step = 50
 export var side_step = 40
-
-signal invader_direction_change
+export var velocity_adjustment = 1.0
 
 enum Travelling {
 	LEFT,
@@ -21,7 +20,6 @@ var right_blip = Vector2(side_step, 0)
 var down_blip = Vector2(0, down_step)
 var currently_travelling = Travelling.RIGHT
 var direction = Vector2(1, 0)
-var velocity_adjustment = 1.0
 var target_pos = Vector2()
 
 func _ready():
