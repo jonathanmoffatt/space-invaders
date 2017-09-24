@@ -10,6 +10,26 @@ script/script = ExtResource( 1 )
 
 [node name="invader-template" parent="." instance=ExtResource( 2 )]
 
+side_step = 40
+
 [node name="player" parent="." instance=ExtResource( 3 )]
+
+[node name="row_movement_timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 0.2
+one_shot = true
+autostart = false
+
+[node name="wave_movement_timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="row_movement_timer" to="." method="_on_row_movement_timer_timeout"]
+
+[connection signal="timeout" from="wave_movement_timer" to="." method="_on_wave_movement_timer_timeout"]
 
 
