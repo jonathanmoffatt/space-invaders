@@ -84,7 +84,7 @@ func get_proportion_remaining():
 	var total = horizontal_count * row_count
 	var number_of_rows_remaining = ceil(float(number_remaining) / horizontal_count)
 	var proportion = number_of_rows_remaining / row_count if number_remaining > 6 else float(number_remaining) / total
-	print_debounce("number_remaining=%s; proportion=%s" % [number_remaining, proportion])
+	global.print_debounce("get_proportion_remaining", "number_remaining=%s; proportion=%s" % [number_remaining, proportion])
 	return proportion
 
 func _on_movement_timer_timeout():
@@ -101,8 +101,3 @@ func _on_movement_timer_timeout():
 		movement_timer.start()
 	else:
 		start_wave()
-
-func print_debounce(message):
-	if message != last_message:
-		print(message)
-		last_message = message

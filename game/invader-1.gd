@@ -1,10 +1,10 @@
 extends Area2D
 
-export var velocity = 150
-export var margin_side = 280
-export var down_step = 50
-export var side_step = 40
-export var velocity_adjustment = 1.0
+var velocity = 150
+var margin_side = 280
+var down_step = 70
+var side_step = 40
+var velocity_adjustment = 1.0
 
 enum Travelling {
 	LEFT,

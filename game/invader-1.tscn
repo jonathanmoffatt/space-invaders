@@ -19,11 +19,6 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 script/script = ExtResource( 1 )
-velocity = 150
-margin_side = 280
-down_step = 50
-side_step = 40
-velocity_adjustment = 1.0
 
 [node name="sprite" type="Sprite" parent="."]
 
