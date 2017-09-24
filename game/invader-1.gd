@@ -67,12 +67,26 @@ func blip_down():
 	target_pos = get_pos() + down_blip
 	set_process(true)
 
+func continuous_right():
+	if currently_travelling != Travelling.RIGHT:
+		currently_travelling = Travelling.RIGHT
+		direction = Vector2(1, 0)
+		target_pos = Vector2(screen_size.width - margin_side, get_pos().y)
+		set_process(true)
+	
+func continuous_left():
+	if currently_travelling != Travelling.LEFT:
+		currently_travelling = Travelling.LEFT
+		direction = Vector2(-1, 0)
+		target_pos = Vector2(margin_side, get_pos().y)
+		set_process(true)
+	
 func is_at_left_limit():
 	return pos.x <= margin_side
 
 func is_at_right_limit():
 	var right_limit = screen_size.width - margin_side
-	return pos.x > right_limit
+	return pos.x >= right_limit
 
 func is_stationary():
 	return currently_travelling == Travelling.STATIONARY
