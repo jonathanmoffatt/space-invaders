@@ -21,6 +21,7 @@ var velocity_adjustment = 1.0
 var pos_at_turn = Vector2()
 
 func _ready():
+	add_to_group("invaders")
 	screen_size = get_viewport_rect().size
 	
 func start():
@@ -55,3 +56,5 @@ func change_direction(new_travel):
 	currently_travelling = new_travel
 	pos_at_turn = get_pos()
 		
+func explode():
+	queue_free()

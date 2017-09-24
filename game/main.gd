@@ -15,4 +15,5 @@ func _ready():
 		
 func on_direction_change(new_travel):
 	for invader in squadron:
-		invader.change_direction(new_travel)
+		if invader:
+			invader.change_direction(new_travel)

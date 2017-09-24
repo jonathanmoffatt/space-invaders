@@ -39,6 +39,8 @@ wait_time = 2.0
 one_shot = false
 autostart = true
 
+[connection signal="area_enter" from="." to="." method="_on_player_bullet_area_enter"]
+
 [connection signal="timeout" from="lifetime" to="." method="_on_lifetime_timeout"]
 
 

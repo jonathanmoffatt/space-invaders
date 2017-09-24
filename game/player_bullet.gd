@@ -16,3 +16,10 @@ func start_at(position):
 
 func _on_lifetime_timeout():
 	queue_free()
+
+func _on_player_bullet_area_enter( area ):
+	print("_on_player_bullet_area_enter")
+	if area.get_groups().has("invaders"):
+		print("is invader!")
+		queue_free()
+		area.explode()

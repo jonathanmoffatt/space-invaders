@@ -10,8 +10,6 @@ script/script = ExtResource( 1 )
 
 [node name="invader-template" parent="." instance=ExtResource( 2 )]
 
-margin_side = 280
-
 [node name="player" parent="." instance=ExtResource( 3 )]
 
 
