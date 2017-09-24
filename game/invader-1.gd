@@ -5,6 +5,8 @@ var margin_side = 280
 var down_step = 70
 var side_step = 40
 var velocity_adjustment = 1.0
+var row_number = -1
+var column_number = -1
 
 enum Travelling {
 	LEFT,
@@ -71,6 +73,9 @@ func is_at_left_limit():
 func is_at_right_limit():
 	var right_limit = screen_size.width - margin_side
 	return pos.x > right_limit
+
+func is_stationary():
+	return currently_travelling == Travelling.STATIONARY
 
 func explode():
 	queue_free()

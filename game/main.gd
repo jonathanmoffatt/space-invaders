@@ -9,6 +9,7 @@ var initial_row_wait_time = 0.2
 var last_message
 
 onready var movement_timer = get_node("movement_timer")
+onready var wave_timer = get_node("wave_timer")
 
 enum Travelling {
 	LEFT,
@@ -25,6 +26,8 @@ func _ready():
 			self.add_child(invader)
 			row.append(weakref(invader))
 			invader.set_pos(Vector2(i*150 + 150, j*120 + 100))
+			invader.row_number = j
+			invader.column_number = i
 		squadron.append(row)
 	start()
 	
@@ -39,8 +42,10 @@ func start_wave():
 		travelling = Travelling.DOWN
 	elif travelling == Travelling.RIGHT && is_on_right_limit():
 		travelling = Travelling.DOWN
-	elif travelling == Travelling.DOWN:
-		travelling = Travelling.RIGHT if is_on_left_limit() else Travelling.LEFT
+	elif travelling == Travelling.DOWN && is_on_left_limit():
+		travelling = Travelling.RIGHT
+	elif travelling == Travelling.DOWN && is_on_right_limit():
+		travelling = Travelling.LEFT
 	var wait_time = initial_row_wait_time * get_proportion_remaining()
 	movement_timer.set_wait_time(wait_time)
 	for invader in get_all_invaders():
@@ -67,6 +72,12 @@ func get_invaders_by_row(row):
 func get_invader_count():
 	return get_all_invaders().size()
 
+func all_invaders_are_stationary():
+	for invader in get_all_invaders():
+		if !invader.is_stationary():
+			return false
+	return true
+
 func is_on_left_limit():
 	for invader in get_all_invaders():
 		if invader.is_at_left_limit():
@@ -84,7 +95,6 @@ func get_proportion_remaining():
 	var total = horizontal_count * row_count
 	var number_of_rows_remaining = ceil(float(number_remaining) / horizontal_count)
 	var proportion = number_of_rows_remaining / row_count if number_remaining > 6 else float(number_remaining) / total
-	global.print_debounce("get_proportion_remaining", "number_remaining=%s; proportion=%s" % [number_remaining, proportion])
 	return proportion
 
 func _on_movement_timer_timeout():
@@ -99,5 +109,14 @@ func _on_movement_timer_timeout():
 	current_row += 1
 	if current_row < row_count:
 		movement_timer.start()
+	elif travelling == Travelling.DOWN:
+		# need to let the top row finish moving down before we change direction and start the next wave 
+		wave_timer.start()
 	else:
 		start_wave()
+
+func _on_wave_timer_timeout():
+	if all_invaders_are_stationary():
+		start_wave()
+	else:
+		wave_timer.start()
