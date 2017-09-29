@@ -11,6 +11,7 @@ var initial_row_wait_time = 0.2
 onready var move_across_timer = get_node("move_across_timer")
 onready var move_down_timer = get_node("move_down_timer")
 onready var explosion_sounds = get_node("explosion_sounds")
+onready var puff = get_node("puff")
 
 enum Travelling {
 	LEFT,
@@ -133,4 +134,8 @@ func get_proportion_remaining():
 		return float(number_remaining) / total
 
 func invader_exploded(invader):
+	var invader_debris = puff.duplicate()
+	self.add_child(invader_debris)
+	invader_debris.set_global_pos(invader.get_global_pos())
+	invader_debris.set_emitting(true)
 	explosion_sounds.play("expl2")

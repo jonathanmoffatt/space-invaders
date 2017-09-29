@@ -46,6 +46,33 @@ visibility/visible = false
 
 [node name="player" parent="." instance=ExtResource( 4 )]
 
+[node name="puff" type="Particles2D" parent="."]
+
+transform/pos = Vector2( 100, 100 )
+transform/scale = Vector2( 2, 2 )
+config/amount = 32
+config/lifetime = 0.3
+config/emit_timeout = 0.3
+config/emitting = false
+config/process_mode = 1
+params/direction = 0.0
+params/spread = 180.0
+params/linear_velocity = 80.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 9.8
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 10.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+color/color = Color( 0.755845, 0.855469, 0.735168, 1 )
+
 [node name="move_across_timer" type="Timer" parent="."]
 
 process_mode = 1
