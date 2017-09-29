@@ -1,5 +1,7 @@
 extends Area2D
 
+signal exploded
+
 var velocity = 150
 var margin_side = 280
 var down_step = 70
@@ -92,4 +94,5 @@ func is_stationary():
 	return currently_travelling == Travelling.STATIONARY
 
 func explode():
+	emit_signal("exploded", self)
 	queue_free()

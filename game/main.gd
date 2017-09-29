@@ -10,6 +10,7 @@ var initial_row_wait_time = 0.2
 
 onready var move_across_timer = get_node("move_across_timer")
 onready var move_down_timer = get_node("move_down_timer")
+onready var explosion_sounds = get_node("explosion_sounds")
 
 enum Travelling {
 	LEFT,
@@ -29,6 +30,7 @@ func _ready():
 			invader.row_number = j
 			invader.column_number = i
 			invader.show()
+			invader.connect("exploded", self, "invader_exploded")
 		squadron.append(row)
 	for invader in get_all_invaders():
 		invader.start()
@@ -130,3 +132,5 @@ func get_proportion_remaining():
 	else:
 		return float(number_remaining) / total
 
+func invader_exploded(invader):
+	explosion_sounds.play("expl2")
