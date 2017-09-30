@@ -2,7 +2,7 @@
 
 [ext_resource path="res://game/main.gd" type="Script" id=1]
 [ext_resource path="res://assets/Backgrounds/starfield.png" type="Texture" id=2]
-[ext_resource path="res://game/invader-1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/invader.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/audio/SimpleBeat.ogg" type="AudioStream" id=5]
 [ext_resource path="res://assets/audio/expl1.wav" type="Sample" id=6]
