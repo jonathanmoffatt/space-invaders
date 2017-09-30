@@ -1,5 +1,9 @@
 extends Node
 
+var margin_side = 280
+var down_step = 70
+var side_step = 40
+
 var messages = {}
 
 func print_debounce(key, message):
