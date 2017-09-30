@@ -32,9 +32,8 @@ func _ready():
 			invader.column_number = i
 			invader.show()
 			invader.connect("exploded", self, "invader_exploded")
+			invader.setup("green-%s" % (j+1))
 		squadron.append(row)
-	for invader in get_all_invaders():
-		invader.start()
 	start_wave()
 	set_process_input(true)
 
