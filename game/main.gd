@@ -12,6 +12,12 @@ var invader_combinations = [
 	["black-2", "black-2", "black-3", "black-3", "black-1"],
 	["red-2", "red-2", "red-3", "red-3", "red-1"]
 ]
+var invader_puff_colours = [
+	Color( 0.755845, 0.855469, 0.735168, 1 ),
+	Color( 0.457184, 0.7554, 0.824219, 0.772549 ),
+	Color( 0.934662, 0.956011, 0.960938, 0.772549 ),
+	Color( 0.796875, 0.537735, 0.348633, 1 )
+]
 
 var squadron = []
 var horizontal_count = 11
@@ -45,8 +51,8 @@ func start_level():
 			invader.column_number = i
 			invader.show()
 			invader.connect("exploded", self, "invader_exploded")
-			var combo = current_level % invader_combinations.size()
-			invader.setup(invader_combinations[combo][row_count-j-1])
+			var combo_index = current_level % invader_combinations.size()
+			invader.setup(invader_combinations[combo_index][row_count-j-1])
 		squadron.append(row)
 	start_wave()
 	set_process_input(true)
@@ -154,5 +160,7 @@ func invader_exploded(invader):
 	var invader_debris = puff.duplicate()
 	self.add_child(invader_debris)
 	invader_debris.set_global_pos(invader.get_global_pos())
+	var colour_index = current_level % invader_puff_colours.size()
+	invader_debris.set_color(invader_puff_colours[colour_index])
 	invader_debris.set_emitting(true)
 	explosion_sounds.play("expl2")

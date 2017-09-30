@@ -71,7 +71,7 @@ params/final_size = 1.0
 params/hue_variation = 0.0
 params/anim_speed_scale = 1.0
 params/anim_initial_pos = 0.0
-color/color = Color( 0.755845, 0.855469, 0.735168, 1 )
+color/color = Color( 0.934662, 0.956011, 0.960938, 0.772549 )
 
 [node name="move_across_timer" type="Timer" parent="."]
 
