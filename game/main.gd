@@ -1,5 +1,18 @@
 extends Node
 
+enum Travelling {
+	LEFT,
+	RIGHT,
+	DOWN
+}
+
+var invader_combinations = [
+	["green-2", "green-2", "green-3", "green-3", "green-1"],
+	["blue-2", "blue-2", "blue-3", "blue-3", "blue-1"],
+	["black-2", "black-2", "black-3", "black-3", "black-1"],
+	["red-2", "red-2", "red-3", "red-3", "red-1"]
+]
+
 var squadron = []
 var horizontal_count = 11
 var row_count = 5
@@ -7,19 +20,19 @@ var speed_up_threshold = 6
 var travelling = Travelling.RIGHT
 var current_row = 0
 var initial_row_wait_time = 0.2
+var current_level = 0
 
 onready var move_across_timer = get_node("move_across_timer")
 onready var move_down_timer = get_node("move_down_timer")
 onready var explosion_sounds = get_node("explosion_sounds")
 onready var puff = get_node("puff")
 
-enum Travelling {
-	LEFT,
-	RIGHT,
-	DOWN
-}
-
 func _ready():
+	start_level()
+
+func start_level():
+	squadron = []
+	travelling = Travelling.RIGHT
 	var invader_template = get_node("invader-template")
 	for j in range(row_count):
 		var row = []
@@ -32,28 +45,33 @@ func _ready():
 			invader.column_number = i
 			invader.show()
 			invader.connect("exploded", self, "invader_exploded")
-			invader.setup("green-%s" % (j+1))
+			var combo = current_level % invader_combinations.size()
+			invader.setup(invader_combinations[combo][row_count-j-1])
 		squadron.append(row)
 	start_wave()
 	set_process_input(true)
 
 func start_wave():
-	current_row = 0
-	if travelling == Travelling.LEFT && is_on_left_limit():
-		travelling = Travelling.DOWN
-	elif travelling == Travelling.RIGHT && is_on_right_limit():
-		travelling = Travelling.DOWN
-	elif travelling == Travelling.DOWN && is_on_left_limit():
-		travelling = Travelling.RIGHT
-	elif travelling == Travelling.DOWN && is_on_right_limit():
-		travelling = Travelling.LEFT
-	var wait_time = initial_row_wait_time * get_proportion_remaining()
-	global.print_debounce("start_wave", "wait_time=%s" % wait_time)
-	move_across_timer.set_wait_time(wait_time)
-	for invader in get_all_invaders():
-		invader.velocity_adjustment = max(5, 1 / get_proportion_remaining())
-	global.print_debounce("velocity_adjustment", 1 / get_proportion_remaining())
-	move_across_timer.start()
+	if get_invader_count() > 0:
+		current_row = 0
+		if travelling == Travelling.LEFT && is_on_left_limit():
+			travelling = Travelling.DOWN
+		elif travelling == Travelling.RIGHT && is_on_right_limit():
+			travelling = Travelling.DOWN
+		elif travelling == Travelling.DOWN && is_on_left_limit():
+			travelling = Travelling.RIGHT
+		elif travelling == Travelling.DOWN && is_on_right_limit():
+			travelling = Travelling.LEFT
+		var wait_time = initial_row_wait_time * get_proportion_remaining()
+		global.print_debounce("start_wave", "wait_time=%s" % wait_time)
+		move_across_timer.set_wait_time(wait_time)
+		for invader in get_all_invaders():
+			invader.velocity_adjustment = max(5, 1 / get_proportion_remaining())
+		global.print_debounce("velocity_adjustment", 1 / get_proportion_remaining())
+		move_across_timer.start()
+	else:
+		current_level += 1
+		start_level()
 
 func _on_move_across_timer_timeout():
 	var row_index = current_row if travelling != Travelling.DOWN else row_count - current_row - 1

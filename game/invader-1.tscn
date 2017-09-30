@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=23 format=1]
 
 [ext_resource path="res://game/invader-1.gd" type="Script" id=1]
 [ext_resource path="res://assets/PNG/Enemies/enemyGreen1.png" type="Texture" id=2]
@@ -6,6 +6,21 @@
 [ext_resource path="res://assets/PNG/Enemies/enemyGreen3.png" type="Texture" id=4]
 [ext_resource path="res://assets/PNG/Enemies/enemyGreen4.png" type="Texture" id=5]
 [ext_resource path="res://assets/PNG/Enemies/enemyGreen5.png" type="Texture" id=6]
+[ext_resource path="res://assets/PNG/Enemies/enemyRed1.png" type="Texture" id=7]
+[ext_resource path="res://assets/PNG/Enemies/enemyRed2.png" type="Texture" id=8]
+[ext_resource path="res://assets/PNG/Enemies/enemyRed3.png" type="Texture" id=9]
+[ext_resource path="res://assets/PNG/Enemies/enemyRed4.png" type="Texture" id=10]
+[ext_resource path="res://assets/PNG/Enemies/enemyRed5.png" type="Texture" id=11]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlue1.png" type="Texture" id=12]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlue2.png" type="Texture" id=13]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlue3.png" type="Texture" id=14]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlue4.png" type="Texture" id=15]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlue5.png" type="Texture" id=16]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlack1.png" type="Texture" id=17]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlack2.png" type="Texture" id=18]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlack3.png" type="Texture" id=19]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlack4.png" type="Texture" id=20]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlack5.png" type="Texture" id=21]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -23,6 +38,12 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 script/script = ExtResource( 1 )
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
 
 [node name="green-1" type="Sprite" parent="."]
 
@@ -49,10 +70,79 @@ texture = ExtResource( 5 )
 visibility/visible = false
 texture = ExtResource( 6 )
 
-[node name="collision" type="CollisionShape2D" parent="."]
+[node name="red-1" type="Sprite" parent="."]
 
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
+visibility/visible = false
+texture = ExtResource( 7 )
+
+[node name="red-2" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 8 )
+
+[node name="red-3" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 9 )
+
+[node name="red-4" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 10 )
+
+[node name="red-5" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 11 )
+
+[node name="blue-1" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 12 )
+
+[node name="blue-2" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 13 )
+
+[node name="blue-3" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 14 )
+
+[node name="blue-4" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 15 )
+
+[node name="blue-5" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 16 )
+
+[node name="black-1" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 17 )
+
+[node name="black-2" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 18 )
+
+[node name="black-3" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 19 )
+
+[node name="black-4" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 20 )
+
+[node name="black-5" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 21 )
 
 
