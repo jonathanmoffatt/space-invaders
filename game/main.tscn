@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://game/main.gd" type="Script" id=1]
 [ext_resource path="res://assets/Backgrounds/starfield.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://assets/audio/expl1.wav" type="Sample" id=6]
 [ext_resource path="res://assets/audio/expl2.wav" type="Sample" id=7]
 [ext_resource path="res://assets/audio/expl3.wav" type="Sample" id=8]
+[ext_resource path="res://game/player_explosion.tscn" type="PackedScene" id=9]
 
 [sub_resource type="SampleLibrary" id=1]
 
@@ -123,6 +124,12 @@ process_mode = 1
 wait_time = 1.0
 one_shot = true
 autostart = false
+
+[node name="player_explosion" parent="." instance=ExtResource( 9 )]
+
+visibility/visible = false
+
+[connection signal="exploded" from="player" to="." method="_on_player_exploded"]
 
 [connection signal="timeout" from="move_across_timer" to="." method="_on_move_across_timer_timeout"]
 

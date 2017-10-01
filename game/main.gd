@@ -34,6 +34,8 @@ onready var explosion_sounds = get_node("explosion_sounds")
 onready var puff = get_node("puff")
 onready var invader_bullet_container = get_node("invader_bullet_container")
 onready var invader_bullet_timer = get_node("invader_bullet_timer")
+onready var player_explosion = get_node("player_explosion")
+onready var player = get_node("player")
 
 func _ready():
 	start_level()
@@ -183,3 +185,9 @@ func _on_invader_bullet_timer_timeout():
 	if invader:
 		invader.fire_bullet()
 		start_invader_bullet_timer()
+
+func _on_player_exploded(player):
+	player_explosion.set_global_pos(player.get_global_pos())
+	player_explosion.show()
+	player_explosion.play()
+	explosion_sounds.play("expl3")

@@ -1,5 +1,7 @@
 extends Area2D
 
+signal exploded
+
 export var velocity = 700
 export (PackedScene) var bullet
 
@@ -47,4 +49,5 @@ func fire():
 	bullet_sounds.play("laser1")
 
 func explode():
-	print("player explode!")
+	emit_signal("exploded", self)
+	queue_free()
