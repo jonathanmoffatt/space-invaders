@@ -5,6 +5,7 @@ var vel = Vector2()
 onready var bullet_sounds = get_node("bullet_sounds")
 
 func _ready():
+	add_to_group("alien_bullets")
 	vel = Vector2(0, velocity)
 	
 func fire(position):
@@ -12,6 +13,10 @@ func fire(position):
 	set_global_pos(position)
 	set_fixed_process(true)
 	
+func explode():
+	# alien bullet has been hit by a player bullet
+	queue_free()
+
 func _fixed_process(delta):
 	set_pos(get_pos() + delta * vel)
 	
