@@ -1,19 +1,20 @@
 extends Area2D
 
-export var velocity = 1000
+export var velocity = 700
 
 var vel = Vector2()
+var container
 
 func _ready():
 	vel = Vector2(0, velocity)
+	
+func fire(position):
+	set_global_pos(position)
 	set_fixed_process(true)
 	
 func _fixed_process(delta):
 	set_pos(get_pos() + delta * vel)
 	
-func start_at(position):
-	set_pos(position)
-
 func _on_lifetime_timeout():
 	queue_free()
 

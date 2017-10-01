@@ -1,6 +1,7 @@
 extends Area2D
 
 signal exploded
+export (PackedScene) var bullet
 
 var velocity = 150
 var velocity_adjustment = 1.0
@@ -9,6 +10,8 @@ var column_number = -1
 var invader_type
 
 var screen_size
+var bullet_container
+var bullet_delay
 var pos = Vector2()
 var left_blip = Vector2(-global.side_step, 0)
 var right_blip = Vector2(global.side_step, 0)
@@ -17,14 +20,24 @@ var currently_travelling = global.Travelling.RIGHT
 var direction = Vector2(1, 0)
 var target_pos = Vector2()
 
+onready var muzzle = get_node("muzzle")
+onready var bullet_timer = get_node("bullet_timer")
+
 func _ready():
 	add_to_group("invaders")
 	screen_size = get_viewport_rect().size
 	
-func setup(type):
+func setup(type, bullet_delay, bullet_container):
+	self.bullet_container = bullet_container
+	self.bullet_delay = bullet_delay
 	invader_type = type
 	get_node(type).show()
 	pos = get_pos()
+	start_bullet_timer()
+
+func start_bullet_timer():
+	bullet_timer.set_wait_time(rand_range(0.1, bullet_delay))
+	bullet_timer.start()
 	
 func _process(delta):
 	pos += velocity * velocity_adjustment * delta * direction
@@ -89,3 +102,9 @@ func is_stationary():
 func explode():
 	emit_signal("exploded", self)
 	queue_free()
+
+func _on_bullet_timer_timeout():
+	var bullet_instance = bullet.instance()
+	bullet_container.add_child(bullet_instance)
+	bullet_instance.fire(muzzle.get_global_pos())
+	start_bullet_timer()

@@ -20,7 +20,7 @@ gravity = 98.0
 linear_damp = 0.1
 angular_damp = 1.0
 script/script = ExtResource( 1 )
-velocity = 1000
+velocity = 700
 
 [node name="bullet" type="Sprite" parent="."]
 

@@ -115,6 +115,8 @@ default/reverb_room = 2
 default/reverb_send = 0.0
 default/chorus_send = 0.0
 
+[node name="invader_bullet_container" type="Node" parent="."]
+
 [connection signal="timeout" from="move_across_timer" to="." method="_on_move_across_timer_timeout"]
 
 [connection signal="timeout" from="move_down_timer" to="." method="_on_move_down_timer_timeout"]
