@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://game/alien_bullet.gd" type="Script" id=1]
 [ext_resource path="res://assets/PNG/Lasers/laserRed01.png" type="Texture" id=2]
-[ext_resource path="res://assets/audio/laser1.wav" type="Sample" id=3]
-[ext_resource path="res://assets/audio/laser2.wav" type="Sample" id=4]
+[ext_resource path="res://assets/PNG/Lasers/laserGreen10.png" type="Texture" id=3]
+[ext_resource path="res://assets/audio/laser1.wav" type="Sample" id=4]
+[ext_resource path="res://assets/audio/laser2.wav" type="Sample" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -17,13 +18,13 @@ samples/laser1 = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 3 )
+"sample": ExtResource( 4 )
 }
 samples/laser2 = {
 "db": 0.0,
 "pitch": 1.0,
 "priority": 0,
-"sample": ExtResource( 4 )
+"sample": ExtResource( 5 )
 }
 
 [node name="alien_bullet" type="Area2D"]
@@ -39,9 +40,15 @@ angular_damp = 1.0
 script/script = ExtResource( 1 )
 velocity = 700
 
-[node name="bullet" type="Sprite" parent="."]
+[node name="blue_fast_bullet" type="Sprite" parent="."]
 
+visibility/visible = false
 texture = ExtResource( 2 )
+
+[node name="green_slow_bullet" type="Sprite" parent="."]
+
+visibility/visible = false
+texture = ExtResource( 3 )
 
 [node name="collision" type="CollisionShape2D" parent="."]
 

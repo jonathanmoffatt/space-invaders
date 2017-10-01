@@ -6,7 +6,12 @@ onready var bullet_sounds = get_node("bullet_sounds")
 
 func _ready():
 	add_to_group("alien_bullets")
-	vel = Vector2(0, velocity)
+	if randi() % 2 == 0:
+		vel = Vector2(0, velocity)
+		get_node("blue_fast_bullet").show()
+	else:
+		vel = Vector2(0, velocity / 2)
+		get_node("green_slow_bullet").show()
 	
 func fire(position):
 	bullet_sounds.play("laser2")
