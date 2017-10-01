@@ -19,8 +19,6 @@ var invader_bullet_delays = [
 	0.2
 ]
 
-export (PackedScene) var invader_bullet
-
 var squadron = []
 var horizontal_count = 11
 var row_count = 5
@@ -74,11 +72,9 @@ func start_wave():
 		elif travelling == global.Travelling.DOWN && is_on_right_limit():
 			travelling = global.Travelling.LEFT
 		var wait_time = initial_row_wait_time * get_proportion_remaining()
-		global.print_debounce("start_wave", "wait_time=%s" % wait_time)
 		move_across_timer.set_wait_time(wait_time)
 		for invader in get_all_invaders():
 			invader.velocity_adjustment = max(5, 1 / get_proportion_remaining())
-		global.print_debounce("velocity_adjustment", 1 / get_proportion_remaining())
 		move_across_timer.start()
 	else:
 		current_level += 1
