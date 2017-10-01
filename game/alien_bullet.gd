@@ -1,14 +1,14 @@
 extends Area2D
 
 export var velocity = 700
-
 var vel = Vector2()
-var container
+onready var bullet_sounds = get_node("bullet_sounds")
 
 func _ready():
 	vel = Vector2(0, velocity)
 	
 func fire(position):
+	bullet_sounds.play("laser2")
 	set_global_pos(position)
 	set_fixed_process(true)
 	

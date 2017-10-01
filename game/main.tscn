@@ -33,7 +33,6 @@ samples/expl3 = {
 [node name="main" type="Node"]
 
 script/script = ExtResource( 1 )
-invader_bullet = null
 
 [node name="background" type="Sprite" parent="."]
 
