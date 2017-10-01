@@ -21,7 +21,6 @@ var direction = Vector2(1, 0)
 var target_pos = Vector2()
 
 onready var muzzle = get_node("muzzle")
-onready var bullet_timer = get_node("bullet_timer")
 
 func _ready():
 	add_to_group("invaders")
@@ -33,12 +32,7 @@ func setup(type, bullet_delay, bullet_container):
 	invader_type = type
 	get_node(type).show()
 	pos = get_pos()
-	start_bullet_timer()
 
-func start_bullet_timer():
-	bullet_timer.set_wait_time(rand_range(0.1, bullet_delay))
-	bullet_timer.start()
-	
 func _process(delta):
 	pos += velocity * velocity_adjustment * delta * direction
 	if currently_travelling == global.Travelling.RIGHT:
@@ -103,8 +97,7 @@ func explode():
 	emit_signal("exploded", self)
 	queue_free()
 
-func _on_bullet_timer_timeout():
+func fire_bullet():
 	var bullet_instance = bullet.instance()
 	bullet_container.add_child(bullet_instance)
 	bullet_instance.fire(muzzle.get_global_pos())
-	start_bullet_timer()

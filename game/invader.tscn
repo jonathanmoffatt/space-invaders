@@ -51,13 +51,6 @@ _update_shape_index = 0
 
 transform/pos = Vector2( 0, 44.7363 )
 
-[node name="bullet_timer" type="Timer" parent="."]
-
-process_mode = 1
-wait_time = 1.0
-one_shot = true
-autostart = false
-
 [node name="green-1" type="Sprite" parent="."]
 
 visibility/visible = false
@@ -157,7 +150,5 @@ texture = ExtResource( 21 )
 
 visibility/visible = false
 texture = ExtResource( 22 )
-
-[connection signal="timeout" from="bullet_timer" to="." method="_on_bullet_timer_timeout"]
 
 

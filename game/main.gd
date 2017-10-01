@@ -7,17 +7,19 @@ var invader_combinations = [
 	["red-2", "red-2", "red-3", "red-3", "red-1"]
 ]
 var invader_puff_colours = [
-	Color( 0.755845, 0.855469, 0.735168, 1 ),
-	Color( 0.457184, 0.7554, 0.824219, 0.772549 ),
-	Color( 0.934662, 0.956011, 0.960938, 0.772549 ),
-	Color( 0.796875, 0.537735, 0.348633, 1 )
+	Color(0.755845, 0.855469, 0.735168, 1),
+	Color(0.457184, 0.7554, 0.824219, 0.772549),
+	Color(0.934662, 0.956011, 0.960938, 0.772549),
+	Color(0.796875, 0.537735, 0.348633, 1)
 ]
 var invader_bullet_delays = [
-	5.0,
-	4.0,
-	3.0,
-	2.0
+	0.7,
+	0.5,
+	0.3,
+	0.2
 ]
+
+export (PackedScene) var invader_bullet
 
 var squadron = []
 var horizontal_count = 11
@@ -33,12 +35,12 @@ onready var move_down_timer = get_node("move_down_timer")
 onready var explosion_sounds = get_node("explosion_sounds")
 onready var puff = get_node("puff")
 onready var invader_bullet_container = get_node("invader_bullet_container")
+onready var invader_bullet_timer = get_node("invader_bullet_timer")
 
 func _ready():
 	start_level()
 
 func start_level():
-	print("starting level %s" % current_level)
 	squadron = []
 	travelling = global.Travelling.RIGHT
 	var invader_template = get_node("invader-template")
@@ -56,6 +58,7 @@ func start_level():
 			var invader_type = get_level_setting(invader_combinations)[row_count-j-1]
 			invader.setup(invader_type, get_level_setting(invader_bullet_delays), invader_bullet_container)
 		squadron.append(row)
+	start_invader_bullet_timer()
 	start_wave()
 	set_process_input(true)
 
@@ -128,6 +131,10 @@ func get_invaders_by_row(row):
 			invaders.append(invader)
 	return invaders
 
+func get_random_invader():
+	var invaders = get_all_invaders()
+	return invaders[randi() % invaders.size()]
+
 func get_invader_count():
 	return get_all_invaders().size()
 
@@ -162,7 +169,6 @@ func invader_exploded(invader):
 	var invader_debris = puff.duplicate()
 	self.add_child(invader_debris)
 	invader_debris.set_global_pos(invader.get_global_pos())
-	var colour_index = current_level % invader_puff_colours.size()
 	invader_debris.set_color(get_level_setting(invader_puff_colours))
 	invader_debris.set_emitting(true)
 	explosion_sounds.play("expl2")
@@ -170,3 +176,14 @@ func invader_exploded(invader):
 func get_level_setting(setting_array):
 	var index = current_level % setting_array.size()
 	return setting_array[index]
+
+func start_invader_bullet_timer():
+	var time_until_next_bullet = rand_range(0, get_level_setting(invader_bullet_delays))
+	invader_bullet_timer.set_wait_time(time_until_next_bullet)
+	invader_bullet_timer.start()
+	
+func _on_invader_bullet_timer_timeout():
+	var invader = get_random_invader()
+	if invader:
+		invader.fire_bullet()
+		start_invader_bullet_timer()

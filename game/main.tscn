@@ -33,6 +33,7 @@ samples/expl3 = {
 [node name="main" type="Node"]
 
 script/script = ExtResource( 1 )
+invader_bullet = null
 
 [node name="background" type="Sprite" parent="."]
 
@@ -117,8 +118,17 @@ default/chorus_send = 0.0
 
 [node name="invader_bullet_container" type="Node" parent="."]
 
+[node name="invader_bullet_timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
 [connection signal="timeout" from="move_across_timer" to="." method="_on_move_across_timer_timeout"]
 
 [connection signal="timeout" from="move_down_timer" to="." method="_on_move_down_timer_timeout"]
+
+[connection signal="timeout" from="invader_bullet_timer" to="." method="_on_invader_bullet_timer_timeout"]
 
 
