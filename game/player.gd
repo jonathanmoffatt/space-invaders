@@ -14,6 +14,7 @@ var right_limit
 var pos = Vector2()
 
 func _ready():
+	add_to_group("player")
 	screen_size = get_viewport_rect().size
 	var player_width = get_node("ship").get_texture().get_width()
 	left_limit = global.margin_side - player_width/2
@@ -44,3 +45,6 @@ func fire():
 	bullet_container.add_child(b)
 	b.start_at(muzzle.get_global_pos())
 	bullet_sounds.play("laser1")
+
+func explode():
+	print("player explode!")

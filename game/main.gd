@@ -1,11 +1,5 @@
 extends Node
 
-enum Travelling {
-	LEFT,
-	RIGHT,
-	DOWN
-}
-
 var invader_combinations = [
 	["green-2", "green-2", "green-3", "green-3", "green-1"],
 	["blue-2", "blue-2", "blue-3", "blue-3", "blue-1"],
@@ -23,7 +17,7 @@ var squadron = []
 var horizontal_count = 11
 var row_count = 5
 var speed_up_threshold = 6
-var travelling = Travelling.RIGHT
+var travelling = global.Travelling.RIGHT
 var current_row = 0
 var initial_row_wait_time = 0.2
 var current_level = 0
@@ -38,7 +32,7 @@ func _ready():
 
 func start_level():
 	squadron = []
-	travelling = Travelling.RIGHT
+	travelling = global.Travelling.RIGHT
 	var invader_template = get_node("invader-template")
 	for j in range(row_count):
 		var row = []
@@ -60,14 +54,14 @@ func start_level():
 func start_wave():
 	if get_invader_count() > 0:
 		current_row = 0
-		if travelling == Travelling.LEFT && is_on_left_limit():
-			travelling = Travelling.DOWN
-		elif travelling == Travelling.RIGHT && is_on_right_limit():
-			travelling = Travelling.DOWN
-		elif travelling == Travelling.DOWN && is_on_left_limit():
-			travelling = Travelling.RIGHT
-		elif travelling == Travelling.DOWN && is_on_right_limit():
-			travelling = Travelling.LEFT
+		if travelling == global.Travelling.LEFT && is_on_left_limit():
+			travelling = global.Travelling.DOWN
+		elif travelling == global.Travelling.RIGHT && is_on_right_limit():
+			travelling = global.Travelling.DOWN
+		elif travelling == global.Travelling.DOWN && is_on_left_limit():
+			travelling = global.Travelling.RIGHT
+		elif travelling == global.Travelling.DOWN && is_on_right_limit():
+			travelling = global.Travelling.LEFT
 		var wait_time = initial_row_wait_time * get_proportion_remaining()
 		global.print_debounce("start_wave", "wait_time=%s" % wait_time)
 		move_across_timer.set_wait_time(wait_time)
@@ -80,18 +74,18 @@ func start_wave():
 		start_level()
 
 func _on_move_across_timer_timeout():
-	var row_index = current_row if travelling != Travelling.DOWN else row_count - current_row - 1
+	var row_index = current_row if travelling != global.Travelling.DOWN else row_count - current_row - 1
 	for invader in get_invaders_by_row(row_index):
-		if travelling == Travelling.LEFT:
+		if travelling == global.Travelling.LEFT:
 			invader.blip_left()
-		if travelling == Travelling.RIGHT:
+		if travelling == global.Travelling.RIGHT:
 			invader.blip_right()
-		if travelling == Travelling.DOWN:
+		if travelling == global.Travelling.DOWN:
 			invader.blip_down()
 	current_row += 1
 	if current_row < row_count:
 		move_across_timer.start()
-	elif travelling == Travelling.DOWN:
+	elif travelling == global.Travelling.DOWN:
 		# need to let the top row finish moving down before we change direction and start the next wave 
 		move_down_timer.start()
 	else:

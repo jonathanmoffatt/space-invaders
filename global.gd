@@ -1,5 +1,12 @@
 extends Node
 
+enum Travelling {
+	LEFT,
+	RIGHT,
+	DOWN,
+	STATIONARY
+}
+
 var margin_side = 280
 var down_step = 70
 var side_step = 40
