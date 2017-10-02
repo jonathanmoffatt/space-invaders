@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://game/player_lives.gd" type="Script" id=1]
+[ext_resource path="res://assets/PNG/playerShip3_orange.png" type="Texture" id=2]
+
+[node name="player_lives" type="Area2D"]
+
+input/pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 1 )
+
+[node name="1" type="Sprite" parent="."]
+
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="2" type="Sprite" parent="."]
+
+transform/pos = Vector2( 60, 0 )
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="3" type="Sprite" parent="."]
+
+transform/pos = Vector2( 120, 0 )
+transform/scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+
