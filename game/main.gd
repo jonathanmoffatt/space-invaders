@@ -1,14 +1,7 @@
 extends Node
 
-var invader_combinations = [
-	["green-2", "green-2", "green-3", "green-3", "green-1"],
-	["blue-2", "blue-2", "blue-3", "blue-3", "blue-1"],
-	["black-2", "black-2", "black-3", "black-3", "black-1"],
-	["red-2", "red-2", "red-3", "red-3", "red-1"]
-]
 var invader_colours = ["green", "blue", "black", "red"]
 var invader_types = ["hard", "medium", "medium", "easy", "easy"]
-
 var invader_puff_colours = [
 	Color(0.755845, 0.855469, 0.735168, 1),
 	Color(0.457184, 0.7554, 0.824219, 0.772549),
@@ -66,8 +59,7 @@ func start_level():
 			invader.column_number = i
 			invader.show()
 			invader.connect("exploded", self, "invader_exploded")
-			var invader_type = get_level_setting(invader_combinations)[row_count-j-1]
-			invader.setup(invader_type, get_level_setting(invader_bullet_delays), invader_bullet_container)
+			invader.setup(get_level_setting(invader_bullet_delays), invader_bullet_container)
 		squadron.append(row)
 	start_invader_bullet_timer()
 	start_wave()

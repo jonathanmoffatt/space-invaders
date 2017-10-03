@@ -7,7 +7,6 @@ var velocity = 150
 var velocity_adjustment = 1.0
 var row_number = -1
 var column_number = -1
-var invader_type
 
 var screen_size
 var bullet_container
@@ -26,11 +25,9 @@ func _ready():
 	add_to_group("invaders")
 	screen_size = get_viewport_rect().size
 	
-func setup(type, bullet_delay, bullet_container):
+func setup(bullet_delay, bullet_container):
 	self.bullet_container = bullet_container
 	self.bullet_delay = bullet_delay
-	invader_type = type
-	# get_node(type).show()
 	pos = get_pos()
 
 func _process(delta):
