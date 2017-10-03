@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://game/main.gd" type="Script" id=1]
-[ext_resource path="res://assets/Backgrounds/starfield.png" type="Texture" id=2]
-[ext_resource path="res://game/invader.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/invader_factory.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/Backgrounds/starfield.png" type="Texture" id=3]
 [ext_resource path="res://game/player.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/audio/SimpleBeat.ogg" type="AudioStream" id=5]
 [ext_resource path="res://assets/audio/expl1.wav" type="Sample" id=6]
@@ -36,15 +36,13 @@ samples/expl3 = {
 
 script/script = ExtResource( 1 )
 
+[node name="invader_factory" parent="." instance=ExtResource( 2 )]
+
 [node name="background" type="Sprite" parent="."]
 
 transform/scale = Vector2( 3.5, 3.5 )
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 centered = false
-
-[node name="invader-template" parent="." instance=ExtResource( 3 )]
-
-visibility/visible = false
 
 [node name="player" parent="." instance=ExtResource( 4 )]
 

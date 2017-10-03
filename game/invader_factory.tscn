@@ -1,0 +1,374 @@
+[gd_scene load_steps=17 format=1]
+
+[ext_resource path="res://game/invader_factory.gd" type="Script" id=1]
+[ext_resource path="res://game/invader.gd" type="Script" id=2]
+[ext_resource path="res://game/alien_bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlack2.png" type="Texture" id=4]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlack3.png" type="Texture" id=5]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlack1.png" type="Texture" id=6]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlue2.png" type="Texture" id=7]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlue3.png" type="Texture" id=8]
+[ext_resource path="res://assets/PNG/Enemies/enemyBlue1.png" type="Texture" id=9]
+[ext_resource path="res://assets/PNG/Enemies/enemyGreen2.png" type="Texture" id=10]
+[ext_resource path="res://assets/PNG/Enemies/enemyGreen3.png" type="Texture" id=11]
+[ext_resource path="res://assets/PNG/Enemies/enemyGreen1.png" type="Texture" id=12]
+[ext_resource path="res://assets/PNG/Enemies/enemyRed2.png" type="Texture" id=13]
+[ext_resource path="res://assets/PNG/Enemies/enemyRed3.png" type="Texture" id=14]
+[ext_resource path="res://assets/PNG/Enemies/enemyRed1.png" type="Texture" id=15]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 42.955
+
+[node name="invader_factory" type="Node"]
+
+script/script = ExtResource( 1 )
+
+[node name="invaders" type="Node" parent="."]
+
+[node name="black" type="Node" parent="invaders"]
+
+[node name="easy" type="Area2D" parent="invaders/black"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/black/easy"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/black/easy"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/black/easy"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 4 )
+
+[node name="medium" type="Area2D" parent="invaders/black"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/black/medium"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/black/medium"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/black/medium"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 5 )
+
+[node name="hard" type="Area2D" parent="invaders/black"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/black/hard"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/black/hard"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/black/hard"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 6 )
+
+[node name="blue" type="Node" parent="invaders"]
+
+[node name="easy" type="Area2D" parent="invaders/blue"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/blue/easy"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/blue/easy"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/blue/easy"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 7 )
+
+[node name="medium" type="Area2D" parent="invaders/blue"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/blue/medium"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/blue/medium"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/blue/medium"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 8 )
+
+[node name="hard" type="Area2D" parent="invaders/blue"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/blue/hard"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/blue/hard"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/blue/hard"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 9 )
+
+[node name="green" type="Node" parent="invaders"]
+
+[node name="easy" type="Area2D" parent="invaders/green"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/green/easy"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/green/easy"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/green/easy"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 10 )
+
+[node name="medium" type="Area2D" parent="invaders/green"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/green/medium"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/green/medium"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/green/medium"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 11 )
+
+[node name="hard" type="Area2D" parent="invaders/green"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/green/hard"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/green/hard"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/green/hard"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 12 )
+
+[node name="red" type="Node" parent="invaders"]
+
+[node name="easy" type="Area2D" parent="invaders/red"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/red/easy"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/red/easy"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/red/easy"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 13 )
+
+[node name="medium" type="Area2D" parent="invaders/red"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/red/medium"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/red/medium"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/red/medium"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 14 )
+
+[node name="hard" type="Area2D" parent="invaders/red"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+bullet = ExtResource( 3 )
+
+[node name="collision" type="CollisionShape2D" parent="invaders/red/hard"]
+
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="muzzle" type="Position2D" parent="invaders/red/hard"]
+
+transform/pos = Vector2( 0, 45 )
+
+[node name="sprite" type="Sprite" parent="invaders/red/hard"]
+
+transform/pos = Vector2( 0.26741, 0 )
+texture = ExtResource( 15 )
+
+

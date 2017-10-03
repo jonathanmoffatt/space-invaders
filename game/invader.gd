@@ -30,7 +30,7 @@ func setup(type, bullet_delay, bullet_container):
 	self.bullet_container = bullet_container
 	self.bullet_delay = bullet_delay
 	invader_type = type
-	get_node(type).show()
+	# get_node(type).show()
 	pos = get_pos()
 
 func _process(delta):
