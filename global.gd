@@ -3,7 +3,8 @@ extends Node
 enum Travelling {
 	LEFT,
 	RIGHT,
-	DOWN,
+	DOWN_THEN_RIGHT,
+	DOWN_THEN_LEFT,
 	STATIONARY
 }
 

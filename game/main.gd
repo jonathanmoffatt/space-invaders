@@ -77,12 +77,12 @@ func start_wave():
 	if get_invader_count() > 0:
 		current_row = 0
 		if travelling == global.Travelling.LEFT && is_on_left_limit():
-			travelling = global.Travelling.DOWN
+			travelling = global.Travelling.DOWN_THEN_RIGHT
 		elif travelling == global.Travelling.RIGHT && is_on_right_limit():
-			travelling = global.Travelling.DOWN
-		elif travelling == global.Travelling.DOWN && is_on_left_limit():
+			travelling = global.Travelling.DOWN_THEN_LEFT
+		elif travelling == global.Travelling.DOWN_THEN_RIGHT:
 			travelling = global.Travelling.RIGHT
-		elif travelling == global.Travelling.DOWN && is_on_right_limit():
+		elif travelling == global.Travelling.DOWN_THEN_LEFT:
 			travelling = global.Travelling.LEFT
 		var wait_time = initial_row_wait_time * get_proportion_remaining()
 		move_across_timer.set_wait_time(wait_time)
@@ -93,19 +93,19 @@ func start_wave():
 		current_level += 1
 		start_level()
 
+func goingDown():
+	return travelling == global.Travelling.DOWN_THEN_RIGHT || travelling == global.Travelling.DOWN_THEN_LEFT
+
 func _on_move_across_timer_timeout():
-	var row_index = current_row if travelling != global.Travelling.DOWN else row_count - current_row - 1
+	var row_index = current_row
+	if goingDown():
+		row_index = row_count - current_row - 1
 	for invader in get_invaders_by_row(row_index):
-		if travelling == global.Travelling.LEFT:
-			invader.blip_left()
-		if travelling == global.Travelling.RIGHT:
-			invader.blip_right()
-		if travelling == global.Travelling.DOWN:
-			invader.blip_down()
+		invader.blip(travelling)
 	current_row += 1
 	if current_row < row_count:
 		move_across_timer.start()
-	elif travelling == global.Travelling.DOWN:
+	elif goingDown():
 		# need to let the top row finish moving down before we change direction and start the next wave 
 		move_down_timer.start()
 	else:

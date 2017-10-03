@@ -43,7 +43,7 @@ func _process(delta):
 		if pos.x < target_pos.x:
 			pos.x = target_pos.x
 			currently_travelling = global.Travelling.STATIONARY
-	if currently_travelling == global.Travelling.DOWN:
+	if currently_travelling == global.Travelling.DOWN_THEN_RIGHT || currently_travelling == global.Travelling.DOWN_THEN_LEFT:
 		if pos.y > target_pos.y:
 			pos.y = target_pos.y
 			currently_travelling = global.Travelling.STATIONARY
@@ -51,38 +51,19 @@ func _process(delta):
 		set_process(false)
 	set_pos(pos)
 
-func blip_left():
-	currently_travelling = global.Travelling.LEFT
-	direction = Vector2(-1, 0)
-	target_pos = get_pos() + left_blip
-	set_process(true)
-
-func blip_right():
-	currently_travelling = global.Travelling.RIGHT
-	direction = Vector2(1, 0)
-	target_pos = get_pos() + right_blip
-	set_process(true)
-
-func blip_down():
-	currently_travelling = global.Travelling.DOWN
-	direction = Vector2(0, 1)
-	target_pos = get_pos() + down_blip
-	set_process(true)
-
-func continuous_right():
-	if currently_travelling != global.Travelling.RIGHT:
-		currently_travelling = global.Travelling.RIGHT
-		direction = Vector2(1, 0)
-		target_pos = Vector2(screen_size.width - global.margin_side, get_pos().y)
-		set_process(true)
-	
-func continuous_left():
-	if currently_travelling != global.Travelling.LEFT:
-		currently_travelling = global.Travelling.LEFT
+func blip(travel_direction):
+	currently_travelling = travel_direction
+	if currently_travelling == global.Travelling.LEFT:
 		direction = Vector2(-1, 0)
-		target_pos = Vector2(global.margin_side, get_pos().y)
-		set_process(true)
-	
+		target_pos = get_pos() + left_blip
+	elif currently_travelling == global.Travelling.RIGHT:
+		direction = Vector2(1, 0)
+		target_pos = get_pos() + right_blip
+	elif currently_travelling == global.Travelling.DOWN_THEN_LEFT || currently_travelling == global.Travelling.DOWN_THEN_RIGHT:
+		direction = Vector2(0, 1)
+		target_pos = get_pos() + down_blip
+	set_process(true)
+
 func is_at_left_limit():
 	return pos.x <= global.margin_side
 
