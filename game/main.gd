@@ -24,6 +24,7 @@ var current_row = 0
 var initial_row_wait_time = 0.2
 var current_level = 0
 var current_lives = 3
+var player
 
 onready var move_across_timer = get_node("move_across_timer")
 onready var move_down_timer = get_node("move_down_timer")
@@ -32,10 +33,10 @@ onready var puff = get_node("puff")
 onready var invader_bullet_container = get_node("invader_bullet_container")
 onready var invader_bullet_timer = get_node("invader_bullet_timer")
 onready var player_explosion = get_node("player_explosion")
-onready var player = get_node("player")
 onready var player_lives = get_node("player_lives")
 onready var player_respawn_timer = get_node("player_respawn_timer")
 onready var invader_factory = get_node("invader_factory")
+onready var player_factory = get_node("player_factory")
 
 func _ready():
 	start_game()
@@ -43,7 +44,14 @@ func _ready():
 func start_game():
 	current_lives = 3
 	player_lives.set_lives(current_lives)
+	spawn_player()
 	start_level()
+
+func spawn_player():
+	var player = player_factory.generate()
+	self.add_child(player)
+	player.connect("exploded", self, "player_exploded")
+	player.start()
 
 func start_level():
 	squadron = []
@@ -174,6 +182,15 @@ func invader_exploded(invader):
 	invader_debris.set_emitting(true)
 	explosion_sounds.play("expl2")
 
+func player_exploded(player):
+	player_explosion.set_global_pos(player.get_global_pos())
+	player_explosion.show()
+	player_explosion.play()
+	explosion_sounds.play("expl3")
+	current_lives -= 1
+	player_lives.set_lives(current_lives)
+	player_respawn_timer.start()
+
 func get_level_setting(setting_array):
 	var index = current_level % setting_array.size()
 	return setting_array[index]
@@ -189,15 +206,6 @@ func _on_invader_bullet_timer_timeout():
 		invader.fire_bullet()
 		start_invader_bullet_timer()
 
-func _on_player_exploded(player):
-	player_explosion.set_global_pos(player.get_global_pos())
-	player_explosion.show()
-	player_explosion.play()
-	explosion_sounds.play("expl3")
-	current_lives -= 1
-	player_lives.set_lives(current_lives)
-	player_respawn_timer.start()
-
 func _on_player_respawn_timer_timeout():
 	if current_lives > 0:
-		player.spawn()
+		spawn_player()

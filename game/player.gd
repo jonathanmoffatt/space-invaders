@@ -21,9 +21,8 @@ func _ready():
 	var player_width = get_node("ship").get_texture().get_width()
 	left_limit = global.margin_side - player_width/2
 	right_limit = screen_size.width - global.margin_side + player_width/2
-	spawn()
 		
-func spawn():
+func start():
 	pos.x = screen_size.width / 2
 	pos.y = screen_size.height - 100
 	set_pos(pos)
@@ -54,5 +53,4 @@ func fire():
 
 func explode():
 	emit_signal("exploded", self)
-	hide()
-	set_process(false)
+	queue_free()
