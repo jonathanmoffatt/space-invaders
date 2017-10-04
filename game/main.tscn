@@ -90,7 +90,7 @@ autostart = false
 [node name="player_respawn_timer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 2.0
+wait_time = 3.0
 one_shot = true
 autostart = false
 

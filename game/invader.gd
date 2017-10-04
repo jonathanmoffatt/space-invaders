@@ -10,7 +10,6 @@ var column_number = -1
 
 var screen_size
 var bullet_container
-var bullet_delay
 var pos = Vector2()
 var left_blip = Vector2(-global.side_step, 0)
 var right_blip = Vector2(global.side_step, 0)
@@ -25,9 +24,8 @@ func _ready():
 	add_to_group("invaders")
 	screen_size = get_viewport_rect().size
 	
-func setup(bullet_delay, bullet_container):
+func setup(bullet_container):
 	self.bullet_container = bullet_container
-	self.bullet_delay = bullet_delay
 	pos = get_pos()
 
 func _process(delta):

@@ -56,13 +56,6 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
-[node name="lifetime" type="Timer" parent="."]
-
-process_mode = 1
-wait_time = 1.0
-one_shot = false
-autostart = false
-
 [node name="bullet_sounds" type="SamplePlayer" parent="."]
 
 config/polyphony = 1
@@ -81,7 +74,5 @@ default/reverb_send = 0.0
 default/chorus_send = 0.0
 
 [connection signal="area_enter" from="." to="." method="_on_alien_bullet_area_enter"]
-
-[connection signal="timeout" from="lifetime" to="." method="_on_lifetime_timeout"]
 
 
