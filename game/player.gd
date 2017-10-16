@@ -6,7 +6,6 @@ export var velocity = 700
 export (PackedScene) var bullet
 
 onready var bullet_container = get_node("bullet_container")
-onready var bullet_timer = get_node("bullet_timer")
 onready var muzzle = get_node("muzzle")
 onready var bullet_sounds = get_node("bullet_sounds")
 
@@ -31,7 +30,7 @@ func start():
 	
 func _process(delta):
 	if Input.is_action_pressed("player_fire"):
-		if get_node("bullet_timer").get_time_left() == 0:
+		if bullet_container.get_child_count() == 0:
 			fire()
 	if Input.is_action_pressed("player_left"):
 		pos.x -= velocity * delta
@@ -45,7 +44,6 @@ func _process(delta):
 	set_pos(pos)
 
 func fire():
-	bullet_timer.start()
 	var b = bullet.instance()
 	bullet_container.add_child(b)
 	b.start_at(muzzle.get_global_pos())

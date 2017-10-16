@@ -60,13 +60,6 @@ _update_shape_index = 0
 
 [node name="bullet_container" type="Node" parent="player"]
 
-[node name="bullet_timer" type="Timer" parent="player"]
-
-process_mode = 1
-wait_time = 0.35
-one_shot = true
-autostart = false
-
 [node name="muzzle" type="Position2D" parent="player"]
 
 transform/pos = Vector2( -0.22319, -46.6463 )

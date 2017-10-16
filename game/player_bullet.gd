@@ -10,12 +10,12 @@ func _ready():
 	
 func _fixed_process(delta):
 	set_pos(get_pos() - delta * vel)
+	var is_offscreen = get_global_pos().y < 0
+	if is_offscreen:
+		queue_free()
 	
 func start_at(position):
 	set_pos(position)
-
-func _on_lifetime_timeout():
-	queue_free()
 
 func _on_player_bullet_area_enter( area ):
 	var g = area.get_groups()
