@@ -64,7 +64,7 @@ func start_level():
 			var invader = invader_factory.generate(get_level_setting(invader_colours), invader_types[j])
 			self.add_child(invader)
 			row.append(weakref(invader))
-			invader.set_pos(Vector2(i*150 + 150, j*120 + 100))
+			invader.set_pos(Vector2(i*150 + 150, j*120 + 300))
 			invader.row_number = j
 			invader.column_number = i
 			invader.show()

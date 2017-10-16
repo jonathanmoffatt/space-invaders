@@ -23,6 +23,7 @@ onready var muzzle = get_node("muzzle")
 func _ready():
 	add_to_group("invaders")
 	screen_size = get_viewport_rect().size
+	connect("area_enter", self, "onAreaEnter")
 	
 func setup(bullet_container):
 	self.bullet_container = bullet_container
@@ -77,3 +78,9 @@ func fire_bullet():
 	var bullet_instance = bullet.instance()
 	bullet_container.add_child(bullet_instance)
 	bullet_instance.fire(muzzle.get_global_pos())
+
+func onAreaEnter(area):
+	if area.get_groups().has("player"):
+		area.explode()
+		explode()
+
